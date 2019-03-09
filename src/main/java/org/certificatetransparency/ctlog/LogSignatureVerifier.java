@@ -22,14 +22,14 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import org.bouncycastle.asn1.ASN1InputStream;
-import org.bouncycastle.asn1.ASN1ObjectIdentifier;
-import org.bouncycastle.asn1.x500.X500Name;
-import org.bouncycastle.asn1.x509.Extension;
-import org.bouncycastle.asn1.x509.Extensions;
-import org.bouncycastle.asn1.x509.TBSCertificate;
-import org.bouncycastle.asn1.x509.V3TBSCertificateGenerator;
-import org.bouncycastle.util.encoders.Base64;
+import org.spongycastle.asn1.ASN1InputStream;
+import org.spongycastle.asn1.ASN1ObjectIdentifier;
+import org.spongycastle.asn1.x500.X500Name;
+import org.spongycastle.asn1.x509.Extension;
+import org.spongycastle.asn1.x509.Extensions;
+import org.spongycastle.asn1.x509.TBSCertificate;
+import org.spongycastle.asn1.x509.V3TBSCertificateGenerator;
+import org.spongycastle.util.encoders.Base64;
 import org.certificatetransparency.ctlog.proto.Ct;
 import org.certificatetransparency.ctlog.serialization.CTConstants;
 import org.certificatetransparency.ctlog.serialization.Serializer;
@@ -87,8 +87,8 @@ public class LogSignatureVerifier {
   static IssuerInformation issuerInformationFromPreCertificateSigningCert(
       Certificate certificate, byte[] keyHash) {
     try (ASN1InputStream aIssuerIn = new ASN1InputStream(certificate.getEncoded())) {
-      org.bouncycastle.asn1.x509.Certificate parsedIssuerCert =
-          org.bouncycastle.asn1.x509.Certificate.getInstance(aIssuerIn.readObject());
+      org.spongycastle.asn1.x509.Certificate parsedIssuerCert =
+          org.spongycastle.asn1.x509.Certificate.getInstance(aIssuerIn.readObject());
 
       Extensions issuerExtensions = parsedIssuerCert.getTBSCertificate().getExtensions();
       Extension x509authorityKeyIdentifier = null;
@@ -213,13 +213,13 @@ public class LogSignatureVerifier {
   private TBSCertificate createTbsForVerification(
       X509Certificate preCertificate, IssuerInformation issuerInformation) {
     Preconditions.checkArgument(preCertificate.getVersion() >= 3);
-    // We have to use bouncycastle's certificate parsing code because Java's X509 certificate
+    // We have to use spongycastle's certificate parsing code because Java's X509 certificate
     // parsing discards the order of the extensions. The signature from SCT we're verifying
     // is over the TBSCertificate in its original form, including the order of the extensions.
     // Get the list of extensions, in its original order, minus the poison extension.
     try (ASN1InputStream aIn = new ASN1InputStream(preCertificate.getEncoded())) {
-      org.bouncycastle.asn1.x509.Certificate parsedPreCertificate =
-          org.bouncycastle.asn1.x509.Certificate.getInstance(aIn.readObject());
+      org.spongycastle.asn1.x509.Certificate parsedPreCertificate =
+          org.spongycastle.asn1.x509.Certificate.getInstance(aIn.readObject());
       // Make sure that we have the X509akid of the real issuer if:
       // The PreCertificate has this extension, AND:
       // The PreCertificate was signed by a PreCertificate signing cert.
@@ -261,7 +261,7 @@ public class LogSignatureVerifier {
   }
 
   private static boolean hasX509AuthorityKeyIdentifier(
-      org.bouncycastle.asn1.x509.Certificate cert) {
+      org.spongycastle.asn1.x509.Certificate cert) {
     Extensions extensions = cert.getTBSCertificate().getExtensions();
     return extensions.getExtension(new ASN1ObjectIdentifier(X509_AUTHORITY_KEY_IDENTIFIER)) != null;
   }
