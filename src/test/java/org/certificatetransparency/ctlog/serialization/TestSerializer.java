@@ -2,17 +2,17 @@ package org.certificatetransparency.ctlog.serialization;
 
 import static org.junit.Assert.assertArrayEquals;
 
-import com.google.common.io.Files;
-import com.google.protobuf.ByteString;
+import java.io.IOException;
 
-import org.apache.commons.codec.binary.Base64;
 import org.certificatetransparency.ctlog.TestData;
 import org.certificatetransparency.ctlog.proto.Ct;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.spongycastle.util.encoders.Base64;
 
-import java.io.IOException;
+import com.google.common.io.Files;
+import com.google.protobuf.ByteString;
 
 /** Test serialization. */
 @RunWith(JUnit4.class)
@@ -27,9 +27,7 @@ public class TestSerializer {
 
     String keyIdBase64 = "3xwuwRUAlFJHqWFoMl3cXHlZ6PfG04j8AC4LvT9012Q=";
     builder.setId(
-        Ct.LogID.newBuilder()
-            .setKeyId(ByteString.copyFrom(Base64.decodeBase64(keyIdBase64)))
-            .build());
+        Ct.LogID.newBuilder().setKeyId(ByteString.copyFrom(Base64.decode(keyIdBase64))).build());
 
     String signatureBase64 =
         "MEUCIGBuEK5cLVobCu1J3Ek39I3nGk6XhOnCCN+/6e9TbPfy"
@@ -38,7 +36,7 @@ public class TestSerializer {
     Ct.DigitallySigned.Builder signatureBuilder = Ct.DigitallySigned.newBuilder();
     signatureBuilder.setHashAlgorithm(Ct.DigitallySigned.HashAlgorithm.SHA256);
     signatureBuilder.setSigAlgorithm(Ct.DigitallySigned.SignatureAlgorithm.ECDSA);
-    signatureBuilder.setSignature(ByteString.copyFrom(Base64.decodeBase64(signatureBase64)));
+    signatureBuilder.setSignature(ByteString.copyFrom(Base64.decode(signatureBase64)));
 
     builder.setSignature(signatureBuilder.build());
 

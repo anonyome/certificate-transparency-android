@@ -45,7 +45,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bouncycastle.util.encoders.Base64;
+import org.spongycastle.util.encoders.Base64;
 import org.certificatetransparency.ctlog.proto.Ct;
 import org.certificatetransparency.ctlog.serialization.Deserializer;
 import org.certificatetransparency.ctlog.utils.VerifySignature;

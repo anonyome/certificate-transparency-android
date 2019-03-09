@@ -10,11 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bouncycastle.asn1.ASN1OctetString;
-import org.bouncycastle.asn1.ASN1Primitive;
-import org.bouncycastle.asn1.DEROctetString;
-import org.bouncycastle.crypto.tls.TlsUtils;
-import org.bouncycastle.util.encoders.Base64;
+import org.spongycastle.asn1.ASN1OctetString;
+import org.spongycastle.asn1.ASN1Primitive;
+import org.spongycastle.asn1.DEROctetString;
+import org.spongycastle.crypto.tls.TlsUtils;
+import org.spongycastle.util.encoders.Base64;
 import org.certificatetransparency.ctlog.CertificateInfo;
 import org.certificatetransparency.ctlog.LogInfo;
 import org.certificatetransparency.ctlog.LogSignatureVerifier;

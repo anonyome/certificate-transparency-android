@@ -1,16 +1,5 @@
 package org.certificatetransparency.ctlog.serialization;
 
-import com.google.common.base.Joiner;
-import com.google.common.io.Files;
-
-import org.apache.commons.codec.binary.Base64;
-import org.bouncycastle.asn1.ASN1ObjectIdentifier;
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.DLSequence;
-import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
-import org.bouncycastle.asn1.x9.X9ObjectIdentifiers;
-import org.certificatetransparency.ctlog.UnsupportedCryptoPrimitiveException;
-
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,6 +18,17 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
+import org.certificatetransparency.ctlog.UnsupportedCryptoPrimitiveException;
+import org.spongycastle.asn1.ASN1ObjectIdentifier;
+import org.spongycastle.asn1.ASN1Sequence;
+import org.spongycastle.asn1.DLSequence;
+import org.spongycastle.asn1.pkcs.PKCSObjectIdentifiers;
+import org.spongycastle.asn1.x9.X9ObjectIdentifiers;
+import org.spongycastle.util.encoders.Base64;
+
+import com.google.common.base.Joiner;
+import com.google.common.io.Files;
 
 /** Class for reading various crypto structures off disk. */
 public class CryptoDataLoader {
@@ -84,7 +84,7 @@ public class CryptoDataLoader {
     // The contents are PEM encoded - first and last lines are header and footer.
     String b64string = Joiner.on("").join(pemLines.subList(1, pemLines.size() - 1));
     // Extract public key
-    byte[] keyBytes = Base64.decodeBase64(b64string);
+    byte[] keyBytes = Base64.decode(b64string);
     String keyAlg = determineKeyAlg(keyBytes);
     X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
     KeyFactory kf;
