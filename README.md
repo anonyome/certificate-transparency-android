@@ -8,6 +8,6 @@ The following modifications were made to adapt the code so that it will work on 
 *   Replace use of com.google-code.json-simple with Google's Gson, which contains newer bytecode which is compatible with Android.
 *   Change the Maven component name from ctlog to ctlog-android.
 
-For an example of how to use the code in this repository please examine [SslConnectionCheckingTest.java](src/test/java/org/certificatetransparency/ctlog/SslConnectionCheckingTest.java)
+For an example of how to use the code in this repository please examine [SslConnectionCheckingTest.java](src/test/java/org/certificatetransparency/ctlog/comm/SslConnectionCheckingTest.java)
 
 Warwick Hunter 2019-03-10
