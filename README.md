@@ -1,5 +1,8 @@
 # Certificate Transparency Android
 
+This repository has been archived. This code is no longer being maintained. We suggest moving to an alternative
+solution such as https://github.com/appmattus/certificatetransparency
+
 This repository contains a modified version of [https://github.com/google/certificate-transparency-java](https://github.com/google/certificate-transparency-java). 
 
 The following modifications were made to adapt the code so that it will work on Android.
